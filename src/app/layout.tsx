@@ -1,14 +1,14 @@
-import type { Metadata } from "next";
-import { Montserrat } from "next/font/google";
-import "./globals.css";
+import type { Metadata } from 'next';
+import { Montserrat } from 'next/font/google';
+import '../styles/globals.css';
 
 const montserrat = Montserrat({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+  variable: '--font-geist-mono',
+  subsets: ['latin'],
 });
 
 export const metadata: Metadata = {
-  title: "Sweet khan Sunny",
+  title: 'Sweet khan Sunny',
   description: "Sweet khan Sunny's boiler plate",
 };
 
@@ -19,7 +19,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-     
       <body className={`${montserrat.variable} antialiased`}>{children}</body>
     </html>
   );
