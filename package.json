@@ -10,9 +10,15 @@
     "mock:api": "nodemon --watch mock-api --ext ts --exec ts-node mock-api/server.ts"
   },
   "dependencies": {
+    "@hookform/resolvers": "5.2.1",
+    "axios": "1.11.0",
     "next": "15.3.5",
+    "next-auth": "5.0.0-beta.29",
     "react": "19.1.1",
-    "react-dom": "19.1.1"
+    "react-dom": "19.1.1",
+    "react-hook-form": "7.62.0",
+    "react-icons": "5.5.0",
+    "zod": "4.0.17"
   },
   "devDependencies": {
     "@eslint/eslintrc": "3.3.1",
