@@ -6,7 +6,7 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import { useRouter, useSearchParams } from 'next/navigation';
-import { loginAction } from '@/actions/login';
+import { signInWithEmailAction } from '@/actions/login';
 
 const loginSchema = z.object({
   email: z.string().email('Invalid email address'),
@@ -28,7 +28,10 @@ const LoginPage: React.FC = () => {
   });
 
   const onSubmit = async (data: LoginFormInputs) => {
-    const res = await loginAction(data);
+    const formData = new FormData()
+    formData.append("email" , data.email)
+    formData.append("password", data.password)
+    const res = await signInWithEmailAction(formData);
 
     if (!!res) {
       const redirectUrl = new URL(searchParams.get('callbackUrl') || '/');

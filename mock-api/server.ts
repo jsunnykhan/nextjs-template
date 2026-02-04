@@ -1,6 +1,6 @@
 import express from 'express';
 import AuthRouter from './routes/auth-route.ts';
-const MOCK_API_PORT = 3001;
+const MOCK_API_PORT = process.env.MOCK_API_PORT || 3001;
 const app = express();
 
 app.use('/auth', AuthRouter);

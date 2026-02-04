@@ -1,12 +1,15 @@
 'use client';
 
-import { useSession } from 'next-auth/react';
+import { authClient } from '@/lib/auth-client';
 import { useState } from 'react';
 
 const Header = () => {
+
+  const {data: session} = authClient.useSession()
+
   const [open, setOpen] = useState<boolean>(false);
 
-  const { data: session } = useSession();
+
   return (
     <header className="min-h-[64px] px-6 flex items-center justify-between bg-gray-100 text-gray-800 shadow-sm">
       <div className="relative">

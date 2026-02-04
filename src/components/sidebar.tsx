@@ -1,6 +1,5 @@
 'use client';
 
-import { usePermission } from '@/lib/permission-manager';
 import { routerPermission } from '@/lib/router-permission';
 import Link from 'next/link';
 
@@ -19,14 +18,14 @@ const renderSidebarItem = (route: RoutePermission) => (
 );
 
 const Sidebar = () => {
-  const { hasPermission } = usePermission();
+  
   return (
     <aside className="min-w-[15%] h-screen bg-gray-100 text-gray-800 p-6 border-r border-gray-200">
       <div className="text-2xl font-bold tracking-wide text-gray-800">Logo</div>
       <ul className="space-y-4 mt-16">
         {routerPermission.map((route) => {
           if (route?.global) return renderSidebarItem(route);
-          if (hasPermission(route.permission)) return renderSidebarItem(route);
+          // if (hasPermission(route.permission)) return renderSidebarItem(route);
         })}
       </ul>
     </aside>
