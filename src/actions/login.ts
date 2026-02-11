@@ -8,6 +8,8 @@ export async function signInWithEmailAction(formData: FormData) {
     const email = formData.get("email") as string;
     const password = formData.get("password") as string;
 
+    console.log(email , password)
+
     if (!email || !password) {
         return { error: "Email and Password are required" };
     }
