@@ -1,11 +1,13 @@
-'use server';
+"use server";
 
-import { signOut } from '@/auth'; // or 'next-auth/react' if client-side
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
+import { redirect } from "next/navigation";
 
 export async function logoutAction() {
-  try {
-    return await signOut();
-  } catch (error) {
-    throw error;
-  }
+  await auth.api.signOut({
+    headers: await headers() 
+  });
+  
+  redirect("/");
 }

@@ -1,22 +1,44 @@
-'use server';
+"use server";
 
-'use server';
+import { auth } from "@/lib/auth"; 
+import { headers } from "next/headers";
+import { redirect } from "next/navigation";
 
-import { signIn } from '@/auth'; // or 'next-auth/react' if client-side
-import { LoginFormInputs } from '@/features/auth/login';
-import { AuthError } from 'next-auth';
+export async function signInWithEmailAction(formData: FormData) {
+    const email = formData.get("email") as string;
+    const password = formData.get("password") as string;
 
-export async function loginAction(data: LoginFormInputs) {
-  try {
-    return await signIn('credentials', {
-      email: data.email,
-      password: data.password,
-      redirect: false,
-    });
-  } catch (error) {
-    if (error instanceof AuthError) {
-      return { error: 'Invalid credentials' };
+    if (!email || !password) {
+        return { error: "Email and Password are required" };
     }
-    return { error: 'Unexpected error' };
-  }
+
+    try {
+        // Call the Custom Proxy Endpoint we defined in auth.ts
+        // Cast to 'any' because custom endpoints are not automatically inferred on the typed client
+        await (auth.api as any).signInWithEmail({
+            body: { email, password },
+            headers: await headers()
+        });
+        
+    } catch (e) {
+        // Better Auth throws on error, or returns error object?
+        // With `auth.api`, it usually throws if response is not OK.
+        return { error: "Invalid credentials" };
+    }
+
+    // Redirect on success
+    redirect("/dashboard");
+}
+
+export async function signInWithSSOAction() {
+    const res = await auth.api.signInSocial({
+        body: { provider: "custom-sso" },
+        asResponse: true,
+        headers: await headers()
+    });
+    
+    const redirectUrl = res.headers.get("Location");
+    if (redirectUrl) {
+        redirect(redirectUrl);
+    }
 }
